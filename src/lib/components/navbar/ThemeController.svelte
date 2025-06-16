@@ -1,21 +1,17 @@
-<script context="module">
-	import { theme as t } from '$lib/stores/themeStore';
-	import { browser as b } from '$app/environment';
-
-	if (b) {
-		const savedTheme = localStorage.getItem('theme') || 'abyss';
-		document.documentElement.setAttribute('data-theme', savedTheme);
-		t.set(savedTheme);
-	}
-</script>
-
 <script lang="ts">
-	import { theme, availableThemes } from '$lib/stores/themeStore';
+	import { theme, lightThemes, darkThemes } from '$lib/stores/themeStore';
 	import { browser } from '$app/environment';
 
 	let currentTheme = 'abyss';
+	let lightThemesList: string[] = [];
+	let darkThemesList: string[] = [];
 
 	$: currentTheme = $theme;
+
+	$: {
+		lightThemes.subscribe((themes) => (lightThemesList = themes));
+		darkThemes.subscribe((themes) => (darkThemesList = themes));
+	}
 
 	function setTheme(newTheme: string) {
 		currentTheme = newTheme;
@@ -51,20 +47,42 @@
 			<path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
 		</svg>
 	</div>
+	<!-- Contenido del dropdown -->
 	<div
-		class="dropdown-content bg-base-200 rounded-box w-72 p-4 shadow-lg max-h-[calc(100vh-12rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-base-content scrollbar-track-base-100"
+		class="dropdown-content bg-base-200 rounded-box w-[40rem] p-4 shadow-lg flex flex-row justify-center"
 	>
-		<ul class="flex flex-col items-center">
-			{#each $availableThemes as t}
-				<li class="w-full">
-					<button
-						class="btn py-1 btn-md btn-ghost w-full text-end hover:bg-base-100/20"
-						on:click={() => setTheme(t)}
-					>
-						<span class="font-[sans-serif] text-base-content">{t}</span>
-					</button>
-				</li>
-			{/each}
-		</ul>
+		<!-- Temas claros -->
+		<div class="flex-1 flex flex-col items-center">
+			<h3 class="text-lg font-bold mx-auto mb-2 text-center">Temas claros</h3>
+			<ul class="grid grid-cols-3 gap-3">
+				{#each lightThemesList as theme}
+					<li>
+						<button
+							class="btn btn-sm btn-ghost hover:bg-base-100/20 w-full"
+							on:click={() => setTheme(theme)}
+						>
+							<span class="font-[sans-serif] text-base-content">{theme}</span>
+						</button>
+					</li>
+				{/each}
+			</ul>
+		</div>
+		<div class="divider divider-horizontal"></div>
+		<!-- Temas oscuros -->
+		<div class="flex-1 flex flex-col items-center">
+			<h3 class="text-lg font-bold mx-auto mb-2 text-center">Temas oscuros</h3>
+			<ul class="grid grid-cols-3 gap-3">
+				{#each darkThemesList as theme}
+					<li>
+						<button
+							class="btn btn-sm btn-ghost hover:bg-base-100/20 w-full"
+							on:click={() => setTheme(theme)}
+						>
+							<span class="font-[sans-serif] text-base-content">{theme}</span>
+						</button>
+					</li>
+				{/each}
+			</ul>
+		</div>
 	</div>
 </div>
