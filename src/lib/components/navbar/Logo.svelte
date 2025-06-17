@@ -1,12 +1,12 @@
-<div class="flex items-center gap-x-1 font-mono">
-	<a href="/" class="text-xl flex items-center">
-		<span class=""> &lt; </span>
+<a href="/" class="inline-block group focus:outline-none" aria-label="Volver a la página de inicio">
+	<div class="flex items-baseline gap-x-1.5 text-2xl font-sans text-base-content">
 		<span
-			class="text-xl -ml-.5 mr-.5 transition duration-200 ease-in-out hover:translate-y-[-2px]"
+			class="font-light tracking-tight group-hover:text-primary transition-colors duration-200"
+			>Brian</span
 		>
-			<span class="text-primary">Brian</span>
-			<span class="-ml-3 font-bold">LEFT</span>
-		</span>
-		<span class=""> /&gt; </span>
-	</a>
-</div>
+		<span
+			class="font-semibold tracking-tight group-hover:text-primary transition-colors duration-200"
+			>Benegas</span
+		>
+	</div>
+</a>
